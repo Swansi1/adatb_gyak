@@ -30,7 +30,7 @@ if(!isset($_SESSION)) {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/pages/utalas.php">Utalás</a>
-          <a class="dropdown-item" href="#">Adatok módosítása</a>
+          <a class="dropdown-item" href="/pages/profil.php">Adatok módosítása</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Barát hozzáadása</a>
         </div>
