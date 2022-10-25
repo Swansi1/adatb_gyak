@@ -1,13 +1,11 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 if(!isset($_SESSION)) { 
     session_start(); 
 } 
 if(isset($_SESSION["username"])){
-    header("Location: /index.php"); // ne tudja acceselni az oldalt ha már be van lépve 
+    session_destroy(); // törölje a sessiont és dobja vissza mert a belépés és a kijelentkezés gomb ugyan az 
+    header("Location: /index.php"); 
 } 
 
 $errors = "";

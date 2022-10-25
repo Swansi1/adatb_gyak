@@ -22,12 +22,6 @@
     
   
     ?>
-    MENNYI PÉNZED VAN: 0 Ft
-
-    Utalás másnak
-    Előző utalások megtekintése
-
-
     <div class="container">
         <div class="row">
             <div class="card-deck text-center col-md-6">
@@ -71,7 +65,7 @@
                                     foreach ($ismerosok as $ismeros) {
                                         print('<div class="row">
                                         <div class="col-md-6 font-weight-bold">'. $ismeros["nev"] .'</div>
-                                        <div class="col-md-6"><a class="btn btn-success" href="pages/utalas.php?ismid='. $ismeros["uid"] .'">Utalás</a></div>
+                                        <div class="col-md-6"><a class="btn btn-success" href="/pages/utalas.php?ismid='. $ismeros["uid"] .'">Utalás</a></div>
                                     </div>');
                                     }
                                 ?></li>
@@ -98,7 +92,7 @@
                                     <div class="col-md-3">Üzenet</div>
                                 </div>
                                 <?php 
-                                    $stmt = $conn->prepare("SELECT utalas.datum,utalas.szoveg,utalas.osszeg,user.nev  FROM `utalas` INNER JOIN user ON utalas.kinek = user.uid WHERE `ki` = :uid"); 
+                                    $stmt = $conn->prepare("SELECT utalas.datum,utalas.szoveg,utalas.osszeg,user.nev  FROM `utalas` INNER JOIN user ON utalas.kinek = user.uid WHERE `ki` = :uid ORDER BY utalas.datum DESC"); 
                                     $stmt->execute(["uid" => $_SESSION["uid"]]); 
                                     $utalasok = $stmt->fetchAll();
                                     if(count($utalasok) == 0){
@@ -125,7 +119,7 @@
                                     <div class="col-md-3">Üzenet</div>
                                 </div>
                                 <?php 
-                                    $stmt = $conn->prepare("SELECT utalas.datum,utalas.szoveg,utalas.osszeg,user.nev  FROM `utalas` INNER JOIN user ON utalas.ki = user.uid WHERE `kinek` = :uid"); 
+                                    $stmt = $conn->prepare("SELECT utalas.datum,utalas.szoveg,utalas.osszeg,user.nev  FROM `utalas` INNER JOIN user ON utalas.ki = user.uid WHERE `kinek` = :uid ORDER BY utalas.datum DESC"); 
                                     $stmt->execute(["uid" => $_SESSION["uid"]]); 
                                     $utalasok = $stmt->fetchAll();
                                     if(count($utalasok) == 0){
