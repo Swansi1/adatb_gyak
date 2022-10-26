@@ -43,8 +43,8 @@ if(!isset($_SESSION)) {
           Admin funkciók
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Utalások megtekintése</a>
-          <a class="dropdown-item" href="#">Adatok módosítása</a>
+          <a class="dropdown-item" href="/pages/admin/userEdit.php">Felhasználók kezelése</a>
+          <a class="dropdown-item" href="/pages/admin/">Üzenet kizűtése az Üzenőfalra</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/pages/admin/stat.php">Statisztikák</a>
         </div>
