@@ -32,9 +32,12 @@ if(!isset($_SESSION)) {
           <a class="dropdown-item" href="/pages/utalas.php">Utalás</a>
           <a class="dropdown-item" href="/pages/profil.php">Adatok módosítása</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Barát hozzáadása</a>
+          <a class="dropdown-item" href="/pages/baratAdd.php">Barát hozzáadása</a>
         </div>
       </li>
+      
+
+    <?php if(isset($_SESSION["admin"]) > 0) : ?>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Admin funkciók
@@ -43,9 +46,12 @@ if(!isset($_SESSION)) {
           <a class="dropdown-item" href="#">Utalások megtekintése</a>
           <a class="dropdown-item" href="#">Adatok módosítása</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Statisztikák</a>
+          <a class="dropdown-item" href="/pages/admin/stat.php">Statisztikák</a>
         </div>
       </li>
+    <?php endif; ?>
+
+      
 
     </ul>
     <form class="form-inline my-2 my-lg-0">

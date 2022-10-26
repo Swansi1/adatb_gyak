@@ -8,7 +8,7 @@
     <title>Bank Kezdőlap</title>
 
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    
+
 </head>
 
 <body>
@@ -16,7 +16,8 @@
     <?php
 
     if(!isset($_SESSION["username"])){
-        echo "NEM VAGY be lépve";
+        // echo "NEM VAGY be lépve";
+        die("Üdvözöllek a BestBank-nál ha további adatokat szeretne látni kérem lépjen be!");
     }
     include_once("../connect/connect.php");
     
@@ -54,7 +55,7 @@
                                     <div class="col-md-6">Utalás</div>
                                 </div>
                                 <?php 
-                                    $stmt = $conn->prepare("SELECT user.nev,user.uid  FROM `ismerose` INNER JOIN user ON ismerose.kinek = user.uid WHERE `ki` = :uid"); 
+                                    $stmt = $conn->prepare("SELECT user.nev,user.email,user.uid  FROM `ismerose` INNER JOIN user ON ismerose.ki = user.uid WHERE `kinek` = :uid"); 
                                     $stmt->execute(["uid" => $_SESSION["uid"]]); 
                                     $ismerosok = $stmt->fetchAll();
                                     if(count($ismerosok) == 0){
@@ -64,34 +65,35 @@
                                     }
                                     foreach ($ismerosok as $ismeros) {
                                         print('<div class="row">
-                                        <div class="col-md-6 font-weight-bold">'. $ismeros["nev"] .'</div>
+                                        <div class="col-md-6 font-weight-bold">'. $ismeros["nev"] .' ('. $ismeros["email"] .')</div>
                                         <div class="col-md-6"><a class="btn btn-success" href="/pages/utalas.php?ismid='. $ismeros["uid"] .'">Utalás</a></div>
                                     </div>');
                                     }
-                                ?></li>
+                                ?>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        <div class="row justify-content-center">
+    </div>
+    <div class="row justify-content-center">
         <div class="card-deck text-center col-md-6">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Számlatörténet</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>
-                                <h4>Kimenő utalások:</h4>
-                                <div class="row font-weight-bold">
-                                    <div class="col-md-3">Dátum</div>
-                                    <div class="col-md-3">Kinek</div>
-                                    <div class="col-md-3">Mennyit</div>
-                                    <div class="col-md-3">Üzenet</div>
-                                </div>
-                                <?php 
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Számlatörténet</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>
+                            <h4>Kimenő utalások:</h4>
+                            <div class="row font-weight-bold">
+                                <div class="col-md-3">Dátum</div>
+                                <div class="col-md-3">Kinek</div>
+                                <div class="col-md-3">Mennyit</div>
+                                <div class="col-md-3">Üzenet</div>
+                            </div>
+                            <?php 
                                     $stmt = $conn->prepare("SELECT utalas.datum,utalas.szoveg,utalas.osszeg,user.nev  FROM `utalas` INNER JOIN user ON utalas.kinek = user.uid WHERE `ki` = :uid ORDER BY utalas.datum DESC"); 
                                     $stmt->execute(["uid" => $_SESSION["uid"]]); 
                                     $utalasok = $stmt->fetchAll();
@@ -109,16 +111,16 @@
                                     </div>');
                                     }
                                 ?>
-                            </li>
-                            <li class="mt-5">
-                                <h4>Bejövő utalások:</h4>
-                                <div class="row font-weight-bold">
-                                    <div class="col-md-3">Dátum</div>
-                                    <div class="col-md-3">Ki</div>
-                                    <div class="col-md-3">Mennyit</div>
-                                    <div class="col-md-3">Üzenet</div>
-                                </div>
-                                <?php 
+                        </li>
+                        <li class="mt-5">
+                            <h4>Bejövő utalások:</h4>
+                            <div class="row font-weight-bold">
+                                <div class="col-md-3">Dátum</div>
+                                <div class="col-md-3">Ki</div>
+                                <div class="col-md-3">Mennyit</div>
+                                <div class="col-md-3">Üzenet</div>
+                            </div>
+                            <?php 
                                     $stmt = $conn->prepare("SELECT utalas.datum,utalas.szoveg,utalas.osszeg,user.nev  FROM `utalas` INNER JOIN user ON utalas.ki = user.uid WHERE `kinek` = :uid ORDER BY utalas.datum DESC"); 
                                     $stmt->execute(["uid" => $_SESSION["uid"]]); 
                                     $utalasok = $stmt->fetchAll();
@@ -136,11 +138,53 @@
                                     </div>');
                                     }
                                 ?>
-                            </li>
-                        </ul>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="card-deck text-center col-md-6">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Utalás szegényebb embereknek</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>
+                            <!-- <h4>Kimenő kc</h4> -->
+                            <div class="row font-weight-bold">
+                                <div class="col-md-4">Email</div>
+                                <div class="col-md-4">Pénz</div>
+                                <div class="col-md-4">Utalás</div>
+                                
+                                <!-- <div class="col-md-3">Üzenet</div> -->
+                            </div>
+                            <?php 
+                            // SELECT * FROM `user` WHERE penz < (SELECT penz FROM user WHERE uid = 3)
+                                // csóróbb felhasználók
+                                    $stmt = $conn->prepare("SELECT uid,nev,penz FROM `user` WHERE penz < (SELECT penz FROM user WHERE uid = :uid)"); //! követelményekből allekérdezés
+                                    $stmt->execute(["uid" => $_SESSION["uid"]]); 
+                                    $utalasok = $stmt->fetchAll();
+                                    if(count($utalasok) == 0){
+                                        print('<div class="row">
+                                        <div class="col-md-12 font-weight-bold">Te vagy a legszegényebb :(</div>
+                                    </div');
+                                    }
+                                    foreach ($utalasok as $utalas) {
+                                        print('<div class="row">
+                                            <div class="col-md-4">'. $utalas["nev"] .'</div>
+                                            <div class="col-md-4">'. $utalas["penz"] . ' Ft</div>
+                                            <div class="col-md-4"><a href="/pages/utalas.php?ismid='.$utalas["uid"].'" class="btn btn-success">Utalás</a></div>
+                                        </div>');
+                                    }
+                                ?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <?php require("../include/footer.html"); ?>

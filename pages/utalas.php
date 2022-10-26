@@ -65,6 +65,7 @@
                     "ki" => $_SESSION["uid"],
                     "kinek" => $friendId[0]
                 ]); // utalás log
+                header("Location: /pages/utalas.php");
             }
 
         }else{
