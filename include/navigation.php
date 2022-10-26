@@ -44,7 +44,7 @@ if(!isset($_SESSION)) {
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/pages/admin/userEdit.php">Felhasználók kezelése</a>
-          <a class="dropdown-item" href="/pages/admin/">Üzenet kizűtése az Üzenőfalra</a>
+          <a class="dropdown-item" href="/pages/admin/uzenofalEdit.php">Üzenet kizűtése az Üzenőfalra</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/pages/admin/stat.php">Statisztikák</a>
         </div>
